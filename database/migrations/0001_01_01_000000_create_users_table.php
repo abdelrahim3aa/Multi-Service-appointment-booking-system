@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('status', ['active', 'pending', 'suspended', 'inactive'])->default('active');
+            $table->timestamp('approved_at')->nullable();
+            $table->unsignedBigInteger('approved_by')->nullable();
+            $table->foreign('approved_by')->references('id')->on('users')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });
